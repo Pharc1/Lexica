@@ -6,3 +6,4 @@ langchain
 langchain-community
 unstructured
 python-magic
+PyPDF2
