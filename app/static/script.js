@@ -219,7 +219,7 @@ function stopPulsing() {
 async function uploadFile() {
     const fileInput = document.getElementById('file-upload');
     const loadingOverlay = document.getElementById('loadingOverlay');
-    const message = document.getElementById('message');
+    const message = document.getElementById('messageDone');
 
     if (fileInput.files.length === 0) return;
     pulseColor(0xff0000);
@@ -271,6 +271,7 @@ async function uploadFile() {
         // Afficher le message de confirmation
         stopPulsing();
         message.classList.remove('hidden');
+        message.style.display = 'block';
         const book = document.querySelector('.book');
         book.classList.add('hidden');
 
@@ -278,7 +279,8 @@ async function uploadFile() {
         setTimeout(() => {
             loadingOverlay.classList.add('hidden');
             message.classList.add('hidden');
-        }, 2000);  // Délai de 2 secondes
+            message.style.display = 'none';  // Cacher le message
+        }, 4000);
 
     } catch (error) {
         console.error("Erreur lors de la requête : ", error);

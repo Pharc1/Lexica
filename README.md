@@ -15,7 +15,6 @@
 - **Système de Recommandation** : Suggestions personnalisées basées sur les rôles et les besoins des employés.
 - **Notifications** : Alertes sur les mises à jour des politiques et rappels de conformité.
 
-
 ## Technologies Utilisées
 
 - **Langage de Programmation** : Python
@@ -26,13 +25,12 @@
 
 ## Installation
 
-
 ### Étapes d'installation
 
 1. Clonez le repository :
 
    ```bash
-   git clone https://github.com/votre_nom_utilisateur/HR-GPT.git
+   git clone https://github.com/Pharc1/HR-GPT.git
    cd HR-GPT
    ```
 
@@ -44,8 +42,32 @@ Lancez l'application Flask :
 docker-compose up --build
 ```
 
-Accédez à l'interface utilisateur via [http://localhost:5000](http://localhost:5000).
+Accédez à l'interface utilisateur via [http://localhost:8080](http://localhost:8080).
 
+## Exemple de Données dans la Base de Connaissances
+
+
+### Guide d'Accueil - TechNova Industries 
+
+Bienvenue à TechNova Industries!
+
+Nous sommes ravis de vous compter parmi nous. Voici un guide pour vous orienter dans vos premiers jours chez TechNova.
+
+1. **Votre arrivée le premier jour :**
+   - Veuillez vous présenter à l'accueil à 9h00 pour obtenir votre badge.
+   - Un membre de l'équipe RH vous conduira ensuite à votre bureau.
+
+2. **Configuration IT :**
+   - Vous recevrez un email de bienvenue avec vos identifiants pour tous les systèmes nécessaires.
+   - Pour des questions IT, contactez l'équipe à support@technova.com.
+
+3. **Formation d’intégration :**
+   - Une session d'orientation est prévue le 3ème jour de votre arrivée.
+   - Vous y apprendrez la culture de notre entreprise, les politiques internes et les outils utilisés.
+
+4. **Café et Repas :**
+   - La cantine est située au 2ème étage, ouverte de 12h00 à 14h00.
+   - Le café est disponible gratuitement à la machine située dans le hall principal.
 
 ## License
 

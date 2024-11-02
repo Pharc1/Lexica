@@ -18,7 +18,7 @@
     
     <div class="container">
         <h1 class= "meet-gpt-text">Rencontrez HR-GPT</h1> <!-- Titre -->
-        <h2 class= "try-upload">Uploadez un pdf ou posez une question sur les document déjà présents</h2>
+        <h2 class= "try-upload">Uploadez un document PDF ou posez une question sur les documents déjà présents dans la base de données.</h2>
         
         <!-- Formulaire de question -->
         <form class= "chat-input-area"id="questionForm" action="/ask" method="POST" style="display: flex; align-items: center; position: relative;">
@@ -37,6 +37,7 @@
                 <i class="fas fa-paper-plane send-icon"></i>
             </button>
         </form>
+        <div id="messageDone" class="message hidden">Le fichier a bien été chargé et est prêt à être questionné !</div>
         <div id="loadingOverlay" class="loading-overlay hidden">
             <div class="book">
                 <div class="book__pg-shadow"></div>
@@ -46,7 +47,6 @@
                 <div class="book__pg book__pg--4"></div>
                 <div class="book__pg book__pg--5"></div>
             </div>
-            <div id="message" class="message hidden">Le fichier a bien été chargé et est prêt à être questionné !</div>
         </div>
 
         
