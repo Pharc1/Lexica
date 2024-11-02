@@ -19,3 +19,5 @@ python init.py
 # Lancer l'application Flask
 echo "Démarrage de l'application Flask..."
 exec python app.py
+
+

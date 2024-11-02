@@ -18,14 +18,37 @@
     
     <div class="container">
         <h1 class= "meet-gpt-text">Rencontrez HR-GPT</h1> <!-- Titre -->
+        <h2 class= "try-upload">Uploadez un pdf ou posez une question sur les document déjà présents</h2>
         
         <!-- Formulaire de question -->
-        <form id="questionForm" action="/ask" method="POST" style="display: flex; align-items: center;">
-            <input type="text" id="question" name="question" placeholder="Posez votre question..." required>
+        <form class= "chat-input-area"id="questionForm" action="/ask" method="POST" style="display: flex; align-items: center; position: relative;">
+            <!-- Champ de texte avec icône PDF -->
+            <label for="file-upload" class="file-upload-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48" />
+                </svg>
+            </label>
+            <input type="file" id="file-upload" accept=".pdf" onchange="uploadFile()" style="display: none;" />
+            <!-- Champ de texte -->
+            <input type="text" class="chat-input-text" id="question" name="question" placeholder="Posez votre question..." required />
+        
+            <!-- Bouton envoyer -->
             <button type="submit" class="send-button">
                 <i class="fas fa-paper-plane send-icon"></i>
             </button>
         </form>
+        <div id="loadingOverlay" class="loading-overlay hidden">
+            <div class="book">
+                <div class="book__pg-shadow"></div>
+                <div class="book__pg"></div>
+                <div class="book__pg book__pg--2"></div>
+                <div class="book__pg book__pg--3"></div>
+                <div class="book__pg book__pg--4"></div>
+                <div class="book__pg book__pg--5"></div>
+            </div>
+            <div id="message" class="message hidden">Le fichier a bien été chargé et est prêt à être questionné !</div>
+        </div>
+
         
         <!-- Section réponse (cachée par défaut) -->
         <div id="answerSection" style="display: none;">

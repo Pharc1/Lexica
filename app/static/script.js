@@ -215,3 +215,84 @@ function stopPulsing() {
     gsap.killTweensOf(pointCloud.material.color); // Arrête toutes les animations sur la couleur
     pointCloud.material.color.set(0x9b59b6); // Remet la couleur d'origine
 }
+
+async function uploadFile() {
+    const fileInput = document.getElementById('file-upload');
+    const loadingOverlay = document.getElementById('loadingOverlay');
+    const message = document.getElementById('message');
+
+    if (fileInput.files.length === 0) return;
+    pulseColor(0xff0000);
+
+    // Afficher l'overlay de chargement
+    loadingOverlay.classList.remove('hidden');
+
+    gsap.to(".example-questions", {
+        opacity: 0,
+        height: 0,
+        duration: 0.5,
+        ease: "power2.inOut",
+        onComplete: function () {
+            document.querySelector('.example-questions').style.display = 'none';
+        }
+    });
+    gsap.to(".suggestions-title", {
+        opacity: 0,
+        height: 0,
+        duration: 0.5,
+        ease: "power2.inOut",
+        onComplete: function () {
+            document.querySelector('.suggestions-title').style.display = 'none';
+        }
+    });
+
+    const formData = new FormData();
+    formData.append('file', fileInput.files[0]);
+
+    // Exécuter la requête POST immédiatement
+    try {
+        const response = await fetch('/file', {
+            method: "POST",
+            body: formData,
+            cache: "no-cache" // Assurer qu'il n'y ait pas de problèmes de cache
+        });
+
+        if (!response.ok) {
+            throw new Error("Erreur de réseau : " + response.statusText);
+        }
+
+        const reader = response.body.getReader();
+
+        while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+        }
+
+        // Afficher le message de confirmation
+        stopPulsing();
+        message.classList.remove('hidden');
+        const book = document.querySelector('.book');
+        book.classList.add('hidden');
+
+        // Masquer l'overlay et le message après 2 secondes
+        setTimeout(() => {
+            loadingOverlay.classList.add('hidden');
+            message.classList.add('hidden');
+        }, 2000);  // Délai de 2 secondes
+
+    } catch (error) {
+        console.error("Erreur lors de la requête : ", error);
+        message.innerHTML = "Erreur lors du traitement de la requête.";
+    } finally {
+        stopPulsing();
+        loadingOverlay.classList.add('hidden');
+        message.classList.add('hidden');
+    }
+}
+
+
+// JavaScript pour démarrer l'animation quand le fichier est chargé
+window.addEventListener("load", function() {
+    const book = document.querySelector('.book');
+    book.classList.remove('paused'); // Enlève la classe `paused` pour démarrer l'animation
+});
