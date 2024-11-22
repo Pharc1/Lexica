@@ -16,10 +16,7 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copie le script start.sh et donne les permissions d'exécution
-COPY start.sh ./start.sh
-RUN chmod +x ./start.sh
 
-RUN chmod +x /app/start.sh
 # Copie le reste des fichiers de l'application
 COPY . .
 
