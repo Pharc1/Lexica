@@ -9,7 +9,7 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
 // Création des points dispersés de manière aléatoire
-const pointCount = 1000; // Nombre de points (plus élevé pour plus de densité)
+const pointCount = 150; // Nombre de points (plus élevé pour plus de densité)
 const radius = 2; // Rayon de dispersion des points
 const pointGeometry = new THREE.BufferGeometry();
 const positions = [];
@@ -31,7 +31,7 @@ pointGeometry.setAttribute('position', positionAttribute);
 // Matériau des points avec effet de brillance et opacité variable
 const pointMaterial = new THREE.PointsMaterial({
     color: 0x9b59b6,
-    size: 0.00005, // Taille des points
+    size: 0.01, // Taille des points
     transparent: true,
     opacity: 0.6, // Opacité subtile
     sizeAttenuation: true // Taille des points qui varie en fonction de la distance
@@ -53,7 +53,6 @@ function animate() {
         // Appliquer un léger mouvement aléatoire aux points
         positions[i] += Math.sin(y * 2 + time) * 0.001;
         positions[i + 1] += Math.cos(x * 2 + time) * 0.001;
-        positions[i + 2] += Math.sin(z * 2 + time) * 0.001;
     }
 
     pointGeometry.attributes.position.needsUpdate = true;
