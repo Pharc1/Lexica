@@ -42,7 +42,7 @@ def load_documents_from_folder(folder_path, chunk_size=512):
         loader = DirectoryLoader(folder_path, glob="*.txt")
         documents = loader.load()
         # Découpe les documents en morceaux
-        documents = chunk_text(documents, chunk_size, 50)
+        documents = chunk_text(documents, 1024, 100)
 
         # Log l'information sur le dixième document pour avoir un aperçu 
         if len(documents) > 1:  # Vérifie qu'il y a au moins 10 documents
@@ -68,7 +68,7 @@ def process_pdf(file):
 
     # Crée une liste de documents à partir du texte extrait
     documents = [Document(page_content=text, metadata={'filename': file.filename})]
-    documents = chunk_text(documents, chunk_size=512, chunk_overlap=50)
+    documents = chunk_text(documents, chunk_size=1024, chunk_overlap=100)
     return documents
 
 

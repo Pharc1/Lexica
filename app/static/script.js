@@ -1,94 +1,84 @@
+// Initialisation de la scène, de la caméra et du rendu
 const scene = new THREE.Scene();
-
-const light = new THREE.SpotLight();
-light.position.set(20, 20, 20);
-scene.add(light);
-
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10);
-camera.position.z = 5;
+camera.position.set(0, 0, 5);
+
 
 const renderer = new THREE.WebGLRenderer({ alpha: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
-const controls = new THREE.OrbitControls(camera, renderer.domElement);
-controls.enableDamping = true;
+// Création des points dispersés de manière aléatoire
+const pointCount = 1000; // Nombre de points (plus élevé pour plus de densité)
+const radius = 2; // Rayon de dispersion des points
+const pointGeometry = new THREE.BufferGeometry();
+const positions = [];
 
-const loader = new THREE.STLLoader();
-let pointCloud; // Déclare la variable pour le pointCloud ici
+for (let i = 0; i < pointCount; i++) {
+    // Position aléatoire des points dans une sphère
+    const theta = Math.random() * Math.PI * 2; // Angle autour de l'axe Y
+    const phi = Math.random() * Math.PI - Math.PI / 2; // Angle autour de l'axe X
+    const x = radius * Math.cos(phi) * Math.sin(theta);
+    const y = radius * Math.sin(phi);
+    const z = radius * Math.cos(phi) * Math.cos(theta);
+    
+    positions.push(x, y, z);
+}
 
-loader.load(
-    'static/model.stl',
-    (geometry) => {
-        const vertices = geometry.attributes.position.array;
-        const particleGeometry = new THREE.BufferGeometry();
+const positionAttribute = new THREE.Float32BufferAttribute(positions, 3);
+pointGeometry.setAttribute('position', positionAttribute);
 
-        const scale = 0.1;
-        const pointCount = vertices.length / 3;
-        const positions = new Float32Array(pointCount * 3);
+// Matériau des points avec effet de brillance et opacité variable
+const pointMaterial = new THREE.PointsMaterial({
+    color: 0x9b59b6,
+    size: 0.00005, // Taille des points
+    transparent: true,
+    opacity: 0.6, // Opacité subtile
+    sizeAttenuation: true // Taille des points qui varie en fonction de la distance
+});
 
-        let centerX = 0, centerY = 0, centerZ = 0;
+const points = new THREE.Points(pointGeometry, pointMaterial);
+scene.add(points);
 
-        for (let i = 0; i < pointCount; i++) {
-            centerX += vertices[i * 3];
-            centerY += vertices[i * 3 + 1];
-            centerZ += vertices[i * 3 + 2];
-            positions[i * 3] = vertices[i * 3] * scale;
-            positions[i * 3 + 1] = vertices[i * 3 + 1] * scale;
-            positions[i * 3 + 2] = vertices[i * 3 + 2] * scale;
-        }
+// Animation subtile avec mouvements de type "galaxie"
+function animate() {
+    const time = Date.now() * 0.001;
+    const positions = pointGeometry.attributes.position.array;
 
-        centerX /= pointCount * scale;
-        centerY /= pointCount * scale;
-        centerZ /= pointCount * scale;
+    for (let i = 0; i < positions.length; i += 3) {
+        const x = positions[i];
+        const y = positions[i + 1];
+        const z = positions[i + 2];
 
-        particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-
-        const material = new THREE.PointsMaterial({ color: 0x9b59b6, size: 0.00001 });
-        pointCloud = new THREE.Points(particleGeometry, material); // Assigne le pointCloud
-        scene.add(pointCloud);
-
-        function animate() {
-            requestAnimationFrame(animate);
-
-            const time = Date.now() * 0.002;
-            for (let i = 0; i < pointCount; i++) {
-                const dx = positions[i * 3] - centerX;
-                const dy = positions[i * 3 + 1] - centerY;
-                const dz = positions[i * 3 + 2] - centerZ;
-                const distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
-
-                const waveEffect = Math.sin(distance * 10 - time) * 0.05;
-
-                positions[i * 3] = (vertices[i * 3] * scale) + waveEffect * dx / distance;
-                positions[i * 3 + 1] = (vertices[i * 3 + 1] * scale) + waveEffect * dy / distance;
-                positions[i * 3 + 2] = (vertices[i * 3 + 2] * scale) + waveEffect * dz / distance;
-            }
-            particleGeometry.attributes.position.needsUpdate = true;
-
-            pointCloud.rotation.y += 0.0001;
-
-            controls.update();
-            renderer.render(scene, camera);
-        }
-
-        animate();
-    },
-    (xhr) => {
-        console.log((xhr.loaded / xhr.total) * 100 + '% loaded');
-    },
-    (error) => {
-        console.error(error);
+        // Appliquer un léger mouvement aléatoire aux points
+        positions[i] += Math.sin(y * 2 + time) * 0.001;
+        positions[i + 1] += Math.cos(x * 2 + time) * 0.001;
+        positions[i + 2] += Math.sin(z * 2 + time) * 0.001;
     }
-);
 
-window.addEventListener('resize', onWindowResize);
+    pointGeometry.attributes.position.needsUpdate = true;
 
-function onWindowResize() {
+    // Appliquer une rotation douce sur la scène pour un effet de galaxie
+    scene.rotation.y += 0.0005; // Rotation plus lente pour un effet plus subtil
+    
+    // Mettre à jour la caméra pour un mouvement plus fluide
+    camera.position.x = Math.sin(time * 0.1) * 2; // Mouvement léger de la caméra
+    camera.position.y = Math.cos(time * 0.1) * 2;
+    camera.lookAt(scene.position); // Assurer que la caméra regarde toujours le centre de la scène
+
+    renderer.render(scene, camera);
+    requestAnimationFrame(animate);
+}
+
+animate();
+
+// Gestion du redimensionnement
+window.addEventListener('resize', () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
-}
+});
+
 
 document.querySelectorAll('.clickable').forEach(item => {
     item.addEventListener('click', function() {
@@ -199,7 +189,7 @@ document.getElementById("questionForm").addEventListener("submit", async (e) => 
 
 // Fonction pour pulser la couleur
 function pulseColor() {
-    gsap.to(pointCloud.material.color, {
+    gsap.to(points.material.color, {
         r: 0.84, // Lavande
         g: 0.78,
         b: 0.88,
@@ -212,8 +202,8 @@ function pulseColor() {
 
 // Fonction pour arrêter de pulser
 function stopPulsing() {
-    gsap.killTweensOf(pointCloud.material.color); // Arrête toutes les animations sur la couleur
-    pointCloud.material.color.set(0x9b59b6); // Remet la couleur d'origine
+    gsap.killTweensOf(points.material.color); // Arrête toutes les animations sur la couleur
+    points.material.color.set(0x9b59b6); // Remet la couleur d'origine
 }
 
 async function uploadFile() {
