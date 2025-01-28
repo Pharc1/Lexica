@@ -1,12 +1,12 @@
 # HR-GPT
 
 <p align="center">
-  <img src="app/static/images/logo-rmvd.png" alt="HR-GPT Logo" />
+  <img src="app/static/images/lexica.png" alt="Lexica Logo" />
 </p>
 
 ## Description
 
-**HR-GPT** est un assistant virtuel qui automatise l'accès aux politiques d'entreprise. Grâce à l'intelligence artificielle et à l'intégration de modèles Hugging Face, il permet aux employés de poser des questions en langage naturel et d'obtenir des réponses précises à partir de documents internes (politiques de congés, remboursements, etc.).
+**Lexica** est un assistant virtuel conçu pour automatiser l'accès aux politiques et documents internes d'une entreprise. Grâce à l'intelligence artificielle et à l'intégration des modèles Hugging Face, il permet aux employés de poser des questions en langage naturel et d'obtenir des réponses précises à partir de documents internes (politiques de congés, remboursements, etc.).
 
 ## Fonctionnalités
 
@@ -19,9 +19,9 @@
 
 - **Langage de Programmation** : Python
 - **Framework** : Flask
-- **Modèles** : Openai-ai-4o-mini
-- **Infrastructure Cloud** : Google cloud pour le déploiement et la gestion des services
-- **Stockage** : interne au container flask pour l'instant
+- **Modèles** : OpenAI GPT-4 Mini, modèles Hugging Face
+- **Infrastructure Cloud** : Google Cloud pour le déploiement et la gestion des services
+- **Stockage** : Interne au container Flask pour l'instant
 
 ## Installation
 
@@ -30,8 +30,8 @@
 1. Clonez le repository :
 
    ```bash
-   git clone https://github.com/Pharc1/HR-GPT.git
-   cd HR-GPT
+   git clone https://github.com/Pharc1/lexica.git
+   cd lexica
    ```
 
 ## Utilisation
