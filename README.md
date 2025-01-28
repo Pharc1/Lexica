@@ -6,7 +6,7 @@
 
 ## Description
 
-**Lexica** est un assistant virtuel conçu pour automatiser l'accès aux politiques et documents internes d'une entreprise. Grâce à l'intelligence artificielle et à l'intégration des modèles Hugging Face, il permet aux employés de poser des questions en langage naturel et d'obtenir des réponses précises à partir de documents internes (politiques de congés, remboursements, etc.).
+**Lexica** (anciennement HR-GPT) est un assistant virtuel conçu pour automatiser l'accès aux politiques et documents internes d'une entreprise. Grâce à l'intelligence artificielle et à l'intégration des modèles Hugging Face, il permet aux employés de poser des questions en langage naturel et d'obtenir des réponses précises à partir de documents internes (politiques de congés, remboursements, etc.).
 
 ## Fonctionnalités
 
