@@ -9,7 +9,7 @@ from utils import load_documents_from_folder
 logging.basicConfig(level=logging.INFO)
 
 # Connexion au client Chroma
-client = chromadb.HttpClient(host='https://chroma-482049242144.us-central1.run.app', port=8000)
+client = chromadb.HttpClient(host='localhost', port=8000)
 logging.info("heartbeat %d", client.heartbeat())
 
 # Charger les documents et découper en morceaux

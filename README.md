@@ -6,7 +6,7 @@
 
 ## Description
 
-**Lexica** (anciennement HR-GPT) est un assistant virtuel conçu pour automatiser l'accès aux politiques et documents internes d'une entreprise. Grâce à l'intelligence artificielle et à l'intégration des modèles Hugging Face, il permet aux employés de poser des questions en langage naturel et d'obtenir des réponses précises à partir de documents internes (politiques de congés, remboursements, etc.).
+**Lexica** est un assistant virtuel conçu pour automatiser l'accès aux politiques et documents internes d'une entreprise. Grâce à l'intelligence artificielle et à l'intégration des modèles Hugging Face, il permet aux employés de poser des questions en langage naturel et d'obtenir des réponses précises à partir de documents internes (politiques de congés, remboursements, etc.).
 
 ## Fonctionnalités
 
@@ -36,13 +36,36 @@
 
 ## Utilisation
 
+Lancer la base de données ChromaDB
+
+```bash
+chroma run --path /db_path
+```
+
+
+Un fichier init.py permet d'alimenter la collection avec des données fictives
+
+```bash
+python app/init.py
+```
+
+
 Lancez l'application Flask :
 
 ```bash
 docker-compose up --build
 ```
 
+ou 
+
+```bash
+python app/app.py
+```
+
 Accédez à l'interface utilisateur via [http://localhost:8080](http://localhost:8080).
+
+![Lexica Screenshot](app/static/images/le1.gif)
+
 
 ## Exemple de Données dans la Base de Connaissances
 
@@ -69,12 +92,19 @@ Nous sommes ravis de vous compter parmi nous. Voici un guide pour vous orienter 
    - La cantine est située au 2ème étage, ouverte de 12h00 à 14h00.
    - Le café est disponible gratuitement à la machine située dans le hall principal.
 
-## License
 
-Ce projet est sous la licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de détails.
+Insertion de données
+![Lexica Screenshot](app/static/images/le2.gif)
 
 ## Contact
 
 Pour toute question, n'hésitez pas à me contacter à l'adresse [kpharci@gmail.com](mailto:kpharci@gmail.com).
 
-![HR-GPT Screenshot](app/static/images/screenshot.png)
+
+
+
+
+
+
+
+

@@ -19,7 +19,7 @@ client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
 # Configuration du client Chroma
 chroma_host = os.getenv('CHROMA_DB_HOST', 'https://chroma-482049242144.us-central1.run.app')  
 chroma_port = os.getenv('CHROMA_DB_PORT', 8000) 
-chroma_client = chromadb.HttpClient(host="https://chroma-482049242144.us-central1.run.app", port=chroma_port)
+chroma_client = chromadb.HttpClient(host="localhost", port=chroma_port)
 embeddings_model = embedding_functions.OpenAIEmbeddingFunction(model_name="text-embedding-3-small", api_key=os.getenv('OPENAI_API_KEY'))
 
 @main.route("/")
@@ -58,7 +58,7 @@ def ask():
         return jsonify({"error": "Aucune question fournie."}), 400
 
     base_instructions = """
-    tu es Jovia est un assistant bienveillant qui vouvoie toujours et répond avec joie et émojis. 
+    tu es Lexica est un assistant bienveillant qui vouvoie toujours et répond avec joie et émojis. 
     tu fournit uniquement des réponses basées sur ses connaissances. 
     Si une question dépasse tes connaissances, tu l'indique gentiment. 
     Lorsqu'une adresse mail est donnée, Jovia renvoie un lien mailto avec un sujet et un corps appropriés attention les saut de ligne sont %0A%0A: <a href="mailto:exemple@exemple.com?subject=Sujet pertinent&body=Bonjour,%0A%0AVoici les informations demandées.">exemple@exemple.com</a>
@@ -72,6 +72,8 @@ def ask():
             query_texts=[question], # Chroma will embed this for you
             n_results=5 # how many results to return
         )
+        if not results:
+            print("Aucun résultat trouvé.")
 
         context = "/n/n----/n/n".join(doc for doc  in results['documents'][0])
         logging.info("Contexte trouvé: %s", context)

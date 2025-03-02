@@ -10,8 +10,8 @@ logger = logging.getLogger(__name__)
 
 chroma_host = os.getenv('CHROMA_DB_HOST', 'https://chroma-482049242144.us-central1.run.app')  
 chroma_port = os.getenv('CHROMA_DB_PORT', 8000) 
-chroma_client = chromadb.HttpClient(host=chroma_host, port=chroma_port)
-
+# chroma_client = chromadb.HttpClient(host=chroma_host, port=chroma_port)
+chroma_client = chromadb.Client()
 @documents.route("/file", methods=["POST"])
 def file():
     if 'file' not in request.files:

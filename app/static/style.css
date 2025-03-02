@@ -16,8 +16,9 @@ canvas {
 
 .logo {
     display: block;
-    margin: 60px auto;
-    width: 150px;
+    margin: 70px auto;
+    width: 300px;
+
 }
 
 .container {
@@ -105,6 +106,12 @@ input[type="text"] {
 .example-questions li:hover {
     background-color: #3a3a3a;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.try-upload{
+    font-size: 20px;
+    color: #ffffff;
+    font-weight: 500;
 }
 
 #answerSection {
