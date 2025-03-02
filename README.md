@@ -1,4 +1,4 @@
-# HR-GPT
+# Lexica
 
 <p align="center">
   <img src="app/static/images/lexica.png" alt="Lexica Logo" />
